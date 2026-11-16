@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dynamic Transcript - Zia - ul - Islam</title>
+</head>
+<body>
+
+<!-- HEADER SECTION -->
+<header>
+
+<div>
+ <img src="./image/br3.png" alt="Brains logo" width="200" height="50">
+</div>    
+<h1>BRAINS INSTITUTE PESHAWAR</h1>
+<p>Student Transcript System.</p>
+<nav>
+<a href="#student-info">Student Info</a> |
+<a href="#add-subject">Add Subject</a> |
+<a href="#transcript">Transcript</a>
+</nav>
+</header>
+
+<hr>
+
+<!-- MAIN CONTENT -->
+<main>
+
+<!-- STUDENT INFO FORM -->
+<section id="student-info">
+<h2>Student Information</h2>
+<form>
+<label>Student Name:</label>
+<input type="text" id="studentName" value="Student Name" required>
+<br><br>
+
+<label>Roll No:</label>
+<input type="text" id="rollNo" value="Roll No" required>
+<br><br>
+
+<label>Program:</label>
+<select id="program">
+<option>BSCS</option>
+<option>BSSE</option>
+<option>BSIT</option>
+<option>BSAI</option>
+<option>BSCyber</option>
+</select>
+<br><br>
+
+<label>Semester:</label>
+<input type="number" id="semester" value="7" min="1" max="8">
+<br><br>
+</form>
+</section>
+
+<hr>
+
+<!-- ADD SUBJECT FORM -->
+<section id="add-subject">
+<h2>Add New Subject</h2>
+<form id="subjectForm">
+<label>Subject Code:</label>
+<input type="text" id="code" placeholder="e.g. CS-401" required>
+<br><br>
+
+<label>Subject Name:</label>
+<input type="text" id="subject" placeholder="e.g. Web Development" required>
+<br><br>
+
+<label>Credit Hours:</label>
+<input type="number" id="credit" placeholder="3" min="1" max="4" required>
+<br><br>
+
+<label>Obtained Marks:</label>
+<input type="number" id="marks" placeholder="0-100" min="0" max="100" required>
+<br><br>
+
+<button type="button" onclick="addSubject()">Add Subject</button>
+<button type="reset">Clear Form</button>
+</form>
+</section>
+
+<hr>
+
+<!-- TRANSCRIPT TABLE -->
+<section id="transcript">
+<h2>Academic Transcript</h2>
+<p><strong>Name:</strong> <span id="displayName"><strong>Zia - ul - Islam</strong></span> | <strong>Roll:</strong> <span id="displayRoll"><strong>55200</strong></span></p>
+
+<table border="1" cellpadding="10" cellspacing="0">
+<thead>
+<tr>
+<th>Code</th>
+<th>Subject Name</th>
+<th>Credit Hours</th>
+<th>Marks</th>
+<th>Grade</th>
+<th>GPA Points</th>
+</tr>
+</thead>
+<tbody id="transcriptBody">
+<!-- Data will be added dynamically by JavaScript -->
+</tbody>
+<tfoot>
+<tr>
+<td colspan="2"><strong>Total</strong></td>
+<td><strong id="totalCredits">0</strong></td>
+<td><strong id="totalMarks">0</strong></td>
+<td colspan="2"><strong>CGPA: <span id="cgpa">0.00</span></strong></td>
+</tr>
+</tfoot>
+</table>
+
+<br>
+<button onclick="window.print()">Print Transcript</button>
+</section>
+
+</main>
+
+<hr>
+
+<!-- FOOTER -->
+<footer>
+<p>Contact: ziaulislamkhan64@gmail.com | Peshawar, Pakistan</p>
+<p>© 2026 Zia ul Islam. All Rights Reserved.</p>
+</footer>
+
+<!-- JAVASCRIPT FOR DYNAMIC FUNCTIONALITY -->
+<script>
+let totalCredits = 0;
+let totalPoints = 0;
+let totalMarks = 0;
+
+function getGrade(marks) {
+if (marks >= 85) return { grade: "A", point: 4.0 };
+if (marks >= 80) return { grade: "A-", point: 3.7 };
+if (marks >= 75) return { grade: "B+", point: 3.3 };
+if (marks >= 70) return { grade: "B", point: 3.0 };
+if (marks >= 65) return { grade: "C+", point: 2.7 };
+if (marks >= 60) return { grade: "C", point: 2.3 };
+if (marks >= 50) return { grade: "D", point: 2.0 };
+return { grade: "F", point: 0.0 };
+}
+
+function addSubject() {
+let code = document.getElementById("code").value;
+let subject = document.getElementById("subject").value;
+let credit = parseInt(document.getElementById("credit").value);
+let marks = parseInt(document.getElementById("marks").value);
+
+if (code == "" || subject == "" || !credit || marks < 0) {
+alert("Please fill all fields correctly!");
+return;
+}
+
+let result = getGrade(marks);
+let tbody = document.getElementById("transcriptBody");
+
+let newRow = document.createElement("tr");
+newRow.innerHTML = "<td>" + code + "</td><td>" + subject + "</td><td>" + credit + "</td><td>" + marks + "</td><td>" + result.grade + "</td><td>" + result.point + "</td>";
+tbody.appendChild(newRow);
+
+// Update Totals Dynamically
+
+totalCredits += credit;
+totalPoints += credit * result.point;
+totalMarks += marks;
+
+document.getElementById("totalCredits").innerText = totalCredits;
+document.getElementById("totalMarks")
+    
+</body>
+</html>
